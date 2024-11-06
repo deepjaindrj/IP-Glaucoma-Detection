@@ -86,7 +86,10 @@ def process_image(image_bytes, yolo_model_disc, yolo_model_cup, loaded_model, co
     return image_np, cdr, cdrv, cdrh, rdr, nrr, res
 
 def main():
-    st.title("Glaucoma Detection System Using XGBoost and YOLO")
+    st.markdown(""" <style> .main_title {
+        font-size:3.1rem; color: #F8c617;} 
+        </style> """, unsafe_allow_html=True)
+    st.markdown('<h1 class="main_title"> Glaucoma Detection System Using XGBoost and YOLO </h1>', unsafe_allow_html=True)
     st.header("Methodology")
 
     st.markdown("### Image Preprocessing")
@@ -126,7 +129,54 @@ def main():
         col1.image(image_bytes, caption='Original image', width=200)
         col2.image(output_image, caption='Optic Disc and Cup Segmentation', width=200)
         col3.header("Metrics")
-        col3.write(f"CDR: {cdr}\nCDRv: {cdrv}\nCDRh: {cdrh}\nRDR: {rdr}\nNRR: {nrr}\nResult: {res}")
+
+        # Define custom CSS for the styling
+        st.markdown("""
+            <style>
+            .metric-name {
+                font-weight: bold;
+            }
+            .metric-value {
+                color: #333; /* Dark color for values */
+            }
+            .normal-result {
+                background-color: #4CAF50; /* Green for normal */
+                font-weight: bold;
+                    border-radius: 8px;
+                    color: white;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    text-align: center;
+                    height: 20%;
+            }
+            .glaucoma-result {
+                color: #F44336; /* Red for glaucoma */
+                font-weight: bold;
+                    border-radius: 8px;
+                    color: white;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    text-align: center;
+                    height: 20%;
+            }
+            .result-div{
+                    
+                    }
+            </style>
+        """, unsafe_allow_html=True)
+
+        # Conditional styling for result
+        result_class = 'normal-result' if res == 'Normal' else 'glaucoma-result'
+
+        # Display the metrics with custom styling
+        col3.markdown(f"""
+            <p><span class="metric-name">CDR:</span> <span class="metric-value">{cdr}</span></p>
+            <p><span class="metric-name">CDRv:</span> <span class="metric-value">{cdrv}</span></p>
+            <p><span class="metric-name">CDRh:</span> <span class="metric-value">{cdrh}</span></p>
+            <p><span class="metric-name">RDR:</span> <span class="metric-value">{rdr}</span></p>
+            <p><span class="metric-name">NRR:</span> <span class="metric-value">{nrr}</span></p>
+            <div class="{result_class}"><p>{res}</p></div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

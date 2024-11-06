@@ -127,6 +127,14 @@ def main():
         mean_magnitude = np.mean(magnitude_spectrum)
         
         st.subheader("Original and Enhanced Images")
+        st.markdown(""" <style> .st-emotion-cache-183lzff {
+        font-size:1.1rem; color: #252c37;} 
+            img {
+                border-radius: 20px; 
+                box-shadow: 2px 2px 40px #dedede;
+            }
+        </style> """, unsafe_allow_html=True)
+
         col1, col2 = st.columns(2)
         
         with col1:
